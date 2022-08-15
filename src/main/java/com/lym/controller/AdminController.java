@@ -22,18 +22,22 @@ public class AdminController {
     private AdminService as;
 
     @RequestMapping(value = "/admin/login/status", method = RequestMethod.POST)
-    public JSONObject loginStatus(HttpServletRequest request, HttpSession session) {
+    public Object loginStatus(HttpServletRequest request, HttpSession session) {
         JSONObject jsonObject = new JSONObject();
+        //获取管理员账号
         String name = request.getParameter("name");
+        //获取管理员密码
         String password = request.getParameter("password");
         boolean flag = as.verifyPassword(name, password);
         if (flag) {
-            jsonObject.put(Consts.CODE, 0);
+            //正确
+            jsonObject.put(Consts.CODE, 1);
             jsonObject.put(Consts.MSG, "登录成功");
             session.setAttribute(Consts.NAME, name);
             return jsonObject;
         }
-        jsonObject.put(Consts.CODE, 1);
+        //错误
+        jsonObject.put(Consts.CODE, 0);
         jsonObject.put(Consts.MSG, "用户名或密码错误");
         return jsonObject;
     }

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lym.dao.SongListMapper">
+    <resultMap id="SongListMap" type="com.lym.entity.SongList">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="pic" jdbcType="VARCHAR" property="pic"/>
+        <result column="style" jdbcType="VARCHAR" property="style"/>
+    </resultMap>
+    <resultMap id="SongListIntroductionMap" type="com.lym.entity.SongList" extends="SongListMap">
+        <result column="introduction" jdbcType="LONGVARCHAR" property="introduction"/>
+    </resultMap>
+    <sql id="Base_Column_SongList_List">
+        id
+        ,title,pic,style
+    </sql>
+    <sql id="Base_Column_SongList_Introduction_List">
+        id
+        ,title,introduction,pic,style
+    </sql>
+    <!--public int insertSongList(SongList songList);-->
+    <insert id="insertSongList" parameterType="com.lym.entity.SongList">
+        insert into song_list
+        <!--
+        prefix="(" suffix=")" suffixOverrides=","
+        表示前后加括号，后面去逗号；
+        -->
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="title != null">
+                title,
+            </if>
+            <if test="pic != null">
+                pic,
+            </if>
+            <if test="introduction != null">
+                introduction,
+            </if>
+            <if test="style != null">
+                style,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="title != null">
+                #{title},
+            </if>
+            <if test="pic != null">
+                #{pic},
+            </if>
+            <if test="introduction != null">
+                #{introduction},
+            </if>
+            <if test="style != null">
+                #{style},
+            </if>
+        </trim>
+    </insert>
+    <!--public int updateSongList(SongList songList);-->
+    <update id="updateSongList" parameterType="com.lym.entity.SongList">
+        update song_list
+        <set>
+            <if test="title != null">
+                title = #{title},
+            </if>
+            <if test="pic != null">
+                pic = #{pic},
+            </if>
+            <if test="introduction != null">
+                introduction = #{introduction},
+            </if>
+            <if test="style != null">
+                style = #{style},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+    <!--public int deleteSongList(Integer id);-->
+    <delete id="deleteSongList" parameterType="java.lang.Integer">
+        delete
+        from song_list
+        where id = #{id}
+    </delete>
+    <!--public SongList selectByIdOfSongList(Integer id);-->
+    <select id="selectByIdOfSongList" resultMap="SongListIntroductionMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_SongList_Introduction_List"/>
+        from song_list
+        where id = #{id}
+    </select>
+    <!--public List<SongList> allSongList();-->
+    <select id="allSongList" resultMap="SongListIntroductionMap">
+        select
+        <include refid="Base_Column_SongList_Introduction_List"/>
+        from song_list
+    </select>
+    <!--public List<SongList> selectByTitleOfSongList(String title);-->
+    <select id="selectByTitleOfSongList" resultMap="SongListIntroductionMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_SongList_Introduction_List"/>
+        from song_list where title = #{title}
+    </select>
+    <!--public List<SongList> selectLikeTitle(String title);-->
+    <select id="selectLikeTitle" resultMap="SongListIntroductionMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_SongList_Introduction_List"/>
+        from song_list where title like #{title}
+    </select>
+    <!--public List<SongList> selectListStyle(String style);-->
+    <select id="selectListStyle" resultMap="SongListIntroductionMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_SongList_Introduction_List"/>
+        from song_list where style like #{style}
+    </select>
+</mapper>

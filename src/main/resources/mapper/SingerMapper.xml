@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lym.dao.SingerMapper">
+    <resultMap id="SingerMap" type="com.lym.entity.Singer">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="pic" jdbcType="VARCHAR" property="pic"/>
+        <result column="birth" jdbcType="TIMESTAMP" property="birth"/>
+        <result column="location" jdbcType="VARCHAR" property="location"/>
+        <result column="introduction" jdbcType="VARCHAR" property="introduction"/>
+    </resultMap>
+    <sql id="Base_Column_Singer_List">
+        id
+        ,name,sex,pic,birth,location,introduction
+    </sql>
+    <!--public int insertSinger(Singer singer);-->
+    <insert id="insertSinger" parameterType="com.lym.entity.Singer">
+        insert into singer
+        <!--
+        prefix="(" suffix=")" suffixOverrides=","
+        表示前后加括号，后面去逗号；
+        -->
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="sex != null">
+                sex,
+            </if>
+            <if test="pic != null">
+                pic,
+            </if>
+            <if test="birth != null">
+                birth,
+            </if>
+            <if test="location != null">
+                location,
+            </if>
+            <if test="introduction != null">
+                introduction,
+            </if>
+        </trim>
+        <trim prefix=" values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="name != null">
+                #{name},
+            </if>
+            <if test="sex != null">
+                #{sex},
+            </if>
+            <if test="pic != null">
+                #{pic},
+            </if>
+            <if test="birth != null">
+                #{birth},
+            </if>
+            <if test="location != null">
+                #{location},
+            </if>
+            <if test="introduction != null">
+                #{introduction},
+            </if>
+        </trim>
+    </insert>
+    <!--public int updateSinger(Singer singer);-->
+    <update id="updateSinger" parameterType="com.lym.entity.Singer">
+        update singer
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="sex != null">
+                sex = #{sex},
+            </if>
+            <if test="pic != null">
+                pic = #{pic},
+            </if>
+            <if test="birth != null">
+                birth = #{birth},
+            </if>
+            <if test="location != null">
+                location = #{location},
+            </if>
+            <if test="introduction != null">
+                introduction = #{introduction},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+    <!--public int deleteSinger(Integer id);-->
+    <delete id="deleteSinger" parameterType="java.lang.Integer">
+        delete
+        from singer
+        where id = #{id}
+    </delete>
+    <!--public Singer selectByIdOfSinger(Integer id);-->
+    <select id="selectByIdOfSinger" resultMap="SingerMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_Singer_List"/>
+        from singer
+        where id = #{id}
+    </select>
+    <!--public List<Singer> allSinger();-->
+    <select id="allSinger" resultMap="SingerMap">
+        select
+        <include refid="Base_Column_Singer_List"/>
+        from singer
+    </select>
+    <!--public List<Singer> selectByNameOfSinger(String name);-->
+    <select id="selectByNameOfSinger" resultMap="SingerMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_Singer_List"/>
+        from singer
+        where name like #{name}
+    </select>
+</mapper>

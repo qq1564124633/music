@@ -128,8 +128,8 @@
         <include refid="Base_Column_Song_Lyric_List"/>
         from song
     </select>
-    <!--public List<Song> selectByNameOfSong(String name);-->
-    <select id="selectByNameOfSong" resultMap="SongLyricMap" parameterType="java.lang.String">
+    <!--public List<Song> selectByNameLikeSong(String name);-->
+    <select id="selectByNameLikeSong" resultMap="SongLyricMap" parameterType="java.lang.String">
         select
         <include refid="Base_Column_Song_Lyric_List"/>
         from song
@@ -141,5 +141,12 @@
         <include refid="Base_Column_Song_Lyric_List"/>
         from song
         where singer_id = #{singerId}
+    </select>
+    <!--public List<Song> selectByNameOfSong(String name);-->
+    <select id="selectByNameOfSong" resultMap="SongLyricMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_Song_Lyric_List"/>
+        from song
+        where name = #{name}
     </select>
 </mapper>

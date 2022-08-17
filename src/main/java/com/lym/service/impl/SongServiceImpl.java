@@ -81,9 +81,19 @@ public class SongServiceImpl implements SongService {
      * @return
      */
     @Override
+    public List<Song> selectByNameLikeSong(String name) {
+        return sm.selectByNameLikeSong(name);
+    }
+
+    /**
+     * 根据歌手名字精确查询歌手信息
+     *
+     * @param name
+     * @return
+     */
+    @Override
     public List<Song> selectByNameOfSong(String name) {
-        List<Song> songs = sm.selectByNameOfSong(name);
-        return songs;
+        return sm.selectByNameOfSong(name);
     }
 
     /**

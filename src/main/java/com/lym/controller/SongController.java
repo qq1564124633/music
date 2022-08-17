@@ -174,7 +174,7 @@ public class SongController {
     @RequestMapping(value = "/song/singerName/detail", method = RequestMethod.GET)
     public Object songOfSingerName(HttpServletRequest req) {
         String name = req.getParameter("name");
-        return ss.selectByNameOfSong('%' + name + '%');
+        return ss.selectByNameLikeSong('%' + name + '%');
     }
 
     /**
@@ -292,5 +292,29 @@ public class SongController {
             jsonObject.put("msg", "上传失败" + e.getMessage());
             return jsonObject;
         }
+    }
+
+    /**
+     * 根据歌曲id查询歌曲对象
+     *
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/detail", method = RequestMethod.GET)
+    public Object detail(HttpServletRequest request) {
+        String songId = request.getParameter("songId");
+        return ss.selectByIdOfSong(Integer.parseInt(songId));
+    }
+
+    /**
+     * 按照歌曲名字查询歌曲
+     *
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/songOfSongName", method = RequestMethod.GET)
+    public Object songOfSongName(HttpServletRequest request) {
+        String songName = request.getParameter("songName");
+        return ss.selectByNameOfSong(songName);
     }
 }

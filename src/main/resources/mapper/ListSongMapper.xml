@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lym.dao.ListSongMapper">
+    <resultMap id="ListSongMap" type="com.lym.entity.ListSong">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="song_id" jdbcType="INTEGER" property="songId"/>
+        <result column="song_list_id" jdbcType="INTEGER" property="songListId"/>
+    </resultMap>
+    <sql id="Base_Column_ListSong_List">
+        id
+        ,song_id,song_list_id
+    </sql>
+    <!--public int insertListSong(ListSong listSong);-->
+    <insert id="insertListSong" parameterType="com.lym.entity.ListSong">
+        insert into list_song
+        <!--
+        prefix="(" suffix=")" suffixOverrides=","
+        表示前后加括号，后面去逗号；
+        -->
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="songId != null">
+                song_id,
+            </if>
+            <if test="songListId != null">
+                song_list_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="songId != null">
+                #{songId},
+            </if>
+            <if test="songListId!= null">
+                #{songListId},
+            </if>
+        </trim>
+    </insert>
+    <!--public int updateListSong(ListSong listSong);-->
+    <update id="updateListSong" parameterType="com.lym.entity.ListSong">
+        update list_song
+        <set>
+            <if test="songId != null">
+                song_id = #{songId},
+            </if>
+            <if test="songListId != null">
+                song_list_id = #{songListId},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+    <!--public int deleteListSong(Integer songId, Integer songListId);-->
+    <delete id="deleteListSong" parameterType="java.lang.Integer">
+        delete
+        from list_song
+        where song_id = #{songId}
+          and song_list_id = #{songListId}
+    </delete>
+    <!--public ListSong selectByIdOfListSong(Integer id);-->
+    <select id="selectByIdOfListSong" resultMap="ListSongMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_ListSong_List"/>
+        from list_song
+        where id = #{id}
+    </select>
+    <!--public List<ListSong> allListSong();-->
+    <select id="allListSong" resultMap="ListSongMap">
+        select
+        <include refid="Base_Column_ListSong_List"/>
+        from list_song
+    </select>
+    <!--public List<ListSong> selectBySongListIdOfListSong(Integer songListId);-->
+    <select id="selectBySongListIdOfListSong" resultMap="ListSongMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_ListSong_List"/>
+        from list_song
+        where song_list_id = #{singListId}
+    </select>
+</mapper>

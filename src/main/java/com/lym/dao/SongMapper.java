@@ -57,6 +57,14 @@ public interface SongMapper {
      * @param name
      * @return
      */
+    public List<Song> selectByNameLikeSong(String name);
+
+    /**
+     * 根据歌手名字准确查询歌手信息
+     *
+     * @param name
+     * @return
+     */
     public List<Song> selectByNameOfSong(String name);
 
     /**

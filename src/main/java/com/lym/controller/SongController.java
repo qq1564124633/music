@@ -317,4 +317,15 @@ public class SongController {
         String songName = request.getParameter("songName");
         return ss.selectByNameOfSong(songName);
     }
+
+    /**
+     * 查询所有歌手
+     *
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/allSong", method = RequestMethod.GET)
+    public Object allSong(HttpServletRequest request) {
+        return ss.allSong();
+    }
 }

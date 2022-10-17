@@ -43,7 +43,6 @@ public class SongListController {
         songList.setPic(pic);
         songList.setIntroduction(introduction);
         songList.setStyle(style);
-        System.out.println("123");
 
         boolean res = songListService.insertSongList(songList);
         if (res) {

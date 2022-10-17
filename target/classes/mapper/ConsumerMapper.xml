@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lym.dao.ConsumerMapper">
+    <resultMap id="ConsumerMap" type="com.lym.entity.Consumer">
+        <result column="id" property="id" jdbcType="INTEGER"/>
+        <result column="username" property="username" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="sex" property="sex" jdbcType="VARCHAR"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="birth" property="birth" jdbcType="TIMESTAMP"/>
+        <result column="introduction" property="introduction" jdbcType="VARCHAR"/>
+        <result column="location" property="location" jdbcType="VARCHAR"/>
+        <result column="avator" property="avator" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_Consumer_List">
+        id
+        , username, password, sex, phone, email, birth, introduction, location, avator, create_time, update_time
+    </sql>
+    <!--public int insertConsumer(Consumer consumer);-->
+    <insert id="insertConsumer" parameterType="com.lym.entity.Consumer">
+        insert into consumer
+        <!--
+        prefix="(" suffix=")" suffixOverrides=","
+        表示前后加括号，后面去逗号；
+        -->
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="username != null">
+                username,
+            </if>
+            <if test="password != null">
+                password,
+            </if>
+            <if test="sex != null">
+                sex,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="birth != null">
+                birth,
+            </if>
+            <if test="introduction != null">
+                introduction,
+            </if>
+            <if test="location != null">
+                location,
+            </if>
+            <if test="avator != null">
+                avator,
+            </if>
+            create_time,
+            update_time,
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="username != null">
+                #{username},
+            </if>
+            <if test="password != null">
+                #{password},
+            </if>
+            <if test="sex != null">
+                #{sex},
+            </if>
+            <if test="phone != null">
+                #{phone},
+            </if>
+            <if test="email != null">
+                #{email},
+            </if>
+            <if test="birth != null">
+                #{birth},
+            </if>
+            <if test="introduction != null">
+                #{introduction},
+            </if>
+            <if test="location != null">
+                #{location},
+            </if>
+            <if test="avator != null">
+                #{avator},
+            </if>
+            <!--now()；获取当前时间-->
+            now(),
+            now(),
+        </trim>
+    </insert>
+    <!--public int updateConsumer(Consumer consumer);-->
+    <update id="updateConsumer" parameterType="com.lym.entity.Consumer">
+        update consumer
+        <set>
+            <if test="username != null">
+                username = #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                sex = #{sex,jdbcType=TINYINT},
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=CHAR},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=CHAR},
+            </if>
+            <if test="birth != null">
+                birth = #{birth,jdbcType=TIMESTAMP},
+            </if>
+            <if test="introduction != null">
+                introduction = #{introduction,jdbcType=VARCHAR},
+            </if>
+            <if test="location != null">
+                location = #{location,jdbcType=VARCHAR},
+            </if>
+            <if test="avator != null">
+                avator = #{avator,jdbcType=VARCHAR},
+            </if>
+            update_time = now(),
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <!--public int deleteConsumer(Integer id);-->
+    <delete id="deleteConsumer" parameterType="java.lang.Integer">
+        delete
+        from consumer
+        where id = #{id}
+    </delete>
+    <!--public Consumer selectByIdOfConsumer(Integer id);-->
+    <select id="selectByIdOfConsumer" resultMap="ConsumerMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_Consumer_List"/>
+        from consumer
+        where id = #{id}
+    </select>
+    <!--public List<Consumer> allConsumer();-->
+    <select id="allConsumer" resultMap="ConsumerMap">
+        select
+        <include refid="Base_Column_Consumer_List"/>
+        from consumer
+    </select>
+    <!--public int verifyPassword(String username, String password);-->
+    <select id="verifyPassword" resultType="java.lang.Integer" parameterType="java.util.HashMap">
+        select count(*)
+        from consumer
+        where username = #{username}
+          and password = #{password}
+    </select>
+    <!--public Consumer getByUsername(String username);-->
+    <select id="getByUsername" resultMap="ConsumerMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_Consumer_List"/>
+        from consumer
+        where username=#{username}
+    </select>
+</mapper>
